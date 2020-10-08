@@ -1,8 +1,6 @@
 init python:
     import random
     class Actr:
-
-        
         #Initial Implementation goals.
             #1) Webms need to play on every screen that shows in combat. There needs to be a way to randomly select which webm plays for certain screens (so it cycles through different angles for idle/cast animations)
 
