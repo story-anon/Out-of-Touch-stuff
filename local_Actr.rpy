@@ -1,6 +1,24 @@
 init python:
     import random
     class Actr:
+
+        
+        #Initial Implementation goals.
+            #1) Webms need to play on every screen that shows in combat. There needs to be a way to randomly select which webm plays for certain screens (so it cycles through different angles for idle/cast animations)
+
+            #2) Enemy NPC needs better behavior. She should do her normal attack 3-4 times before doing one of her special attacks (either a single target 2x hit attack or an AOE attack that hits both CJ and Aine).
+
+            #2.1)The enemy NPC should not attack CJ if CJ has 0 MP at the end of his turn, that includes the AOE attack.
+
+            #3) Wave/tide tokens need to be capped at 3 maximum.
+
+            #4) Need to implement a Phase 1 and Phase 2 for the fight. Phase 1 is just CJ against the enemy (With 'Hostage' NPC present, see Task 5), CJ has no spells only Attack, talk and guard. Phase 1 lasts for 5 turns before transitioning to Phase 2.
+            #Phase 2 is the current battle happening.
+
+            #5) Friendly 'Hostage' NPC needs to be implemented for phase 1 and 2. NPC takes damage every turn, if HP reaches 0 its game over. Win condition for Phase 2 is to heal the NPC to full.
+
+            #5.1) Enemy NPC will try to "block" healing to the 'Hostage'. All this means is that the first heal spell to the 'Hostage' will succeed, after that the Enemy needs to be damaged once or twice before heal spells will work again on the 'Hostage'.
+
         name = "you forgot to add a name retard"
         atk = 0
         defense = 0
