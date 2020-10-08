@@ -1,6 +1,22 @@
-﻿init python:
+
+#init:
+#    image movie = Movie(size=(1280,720),xalign=0.5,yalign=0.5)
+
+#label rubyintro:
+#    scene black
+#    show movie
+#    with dissolve
+
+#    play movie "images/dtyd.webm" #If yer shit aint workin it's because of this
+#    $ renpy.transition(fade)#optional
+#    $ renpy.pause(126, hard=True)# substitute "1" with video length in seconds. Stop players from skipping the video. If you want to allow skipping, remove ", hard=True"
+#    return
+#lines 1-13, and line 37 are how to do movies
+init python:
     import random
     import math
+
+
     #Actr Declaration
     #                           Actr(name, atk, defense, hp, mhp, mp, str, mmp, agi, armor, attacks=[], magic={"SPELLNAME":"BUFF OR DMG"}, abilities={"SPELLNAME":"BUFF OR DMG"}, items=[], dice=2) ###dice = 2 means default is 2, that's why enemy has a 3 there.
     Playercharacter = Actr("CJ",0,14,20,20,5,0,5,5,15,["Attack", "Talk"],{"One On One(1MP)":"BUFF","Man Eater(1MP)":"BUFF"})
@@ -16,6 +32,9 @@
         Alliedcharacter1.mp = 0 #
         Playercharacter.isguarding =False
         Alliedcharacter1.isguarding = False
+
+
+        #renpy.call("rubyintro")
         narrator("Select the amount of MP to allocate.", interact=True)
         #SCALABILITY PROBLEM: Will have to detect what allies one has in the future; 1, 2, 3, whether you have ally X or Y, etcetc.
         while(end != "END"):
@@ -108,7 +127,9 @@
                     narrator("Enemy misses!")
 
 label start: #game starts here
+
     python:
+
     #Bando thinks after load, splashscreen, main menu, finaly main menu, lets some option in main menu start a battle
         while(Enemycharacter.hp > 0 and Playercharacter.hp > 0):
             roundstart()
