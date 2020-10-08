@@ -17,6 +17,7 @@ init python:
 
             #5.1) Enemy NPC will try to "block" healing to the 'Hostage'. All this means is that the first heal spell to the 'Hostage' will succeed, after that the Enemy needs to be damaged once or twice before heal spells will work again on the 'Hostage'.
 
+            #6) Add little screen where abilities are shown that describes what each ability/spell does.
         name = "you forgot to add a name retard"
         atk = 0
         defense = 0
@@ -107,6 +108,7 @@ init python:
 
         def magicbuff(self,magicstring):
             #Return name,mp,dice
+            #magicstring = "Gentle Current(1MP)"
             if(magicstring.lower() == "One On One(1MP)".lower()): #Dice buff +1 dice on next attack roll for choice
                 return "ATKDICEBUFF", 1
             if(magicstring.lower() == "Man Eater(1MP)".lower()):
@@ -115,6 +117,8 @@ init python:
                 return "HEAL", 2, 2
             if(magicstring.lower() == "Riptide(3MP)".lower()):
                 return "HEAL", 3, 3
+            if(magicstring.lower() == "Gentle Current(1MP)".lower()):
+                return "HEAL", 1, 1
 
         def magicattacktype(self, magicstring):
 
@@ -193,7 +197,9 @@ init python:
                buff_bool = self.ismagicbuff(action) #Check if magic name received is buff or not
                if(buff_bool == True): #Then the magic passed is a buff
                 #Magic is a buff so we send action to self.magicbuff(action)
+                #action = "Gentle Current(1MP)"
                 type = self.magicbuff(action)
+
                 #type[0] is name, type[1] is mp, type[2] is dice
                 #Because type[0] is name, we can simply access it by the 'in' operator
                 mpneeded = type[1]
@@ -215,6 +221,8 @@ init python:
                         self.mp -= mpneeded
                         heal_roll = actrtobuff.heal(diceamnt)
                         heal_roll_sum = sum(heal_roll)
+                        if(action == "Riptide(3MP)"):
+                            heal_roll_sum += 4
                         actrtobuff.hp += heal_roll_sum
                         if(actrtobuff.hp > actrtobuff.mhp):
                             actrtobuff.hp = actrtobuff.mhp
