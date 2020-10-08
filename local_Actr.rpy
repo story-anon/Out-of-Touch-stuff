@@ -226,7 +226,7 @@ init python:
                         actrtobuff.hp += heal_roll_sum
                         if(actrtobuff.hp > actrtobuff.mhp):
                             actrtobuff.hp = actrtobuff.mhp
-                        narrator("Your dice rolls were ["+''.join(str(x)+"," for x in heal_roll)+ "]" + ", healing " +actrtobuff.name+" for "+str(heal_roll_sum) + " HP")
+                        narrator("Your dice rolls were ["+''.join(str(x)+"," for x in heal_roll)+ "]+4" + ", healing " +actrtobuff.name+" for "+str(heal_roll_sum) + " HP")
 
 
                 else: #Not enough mana
