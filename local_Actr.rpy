@@ -2,6 +2,7 @@ init python:
     import random
     class Actr:
         #test
+        #test 2
         name = "you forgot to add a name retard"
         atk = 0
         defense = 0
