@@ -3247,4 +3247,3 @@ screen battlechoice(Actr, choice):
                     textbutton "Go back" action Return("b")
 
                 #textbutton _("End Turn") action Jump("battleEnd")
->>>>>>> aee2c9154e9f83843edbb7fac164e7bd932f376e
