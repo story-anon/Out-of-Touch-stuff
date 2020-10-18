@@ -1587,8 +1587,8 @@ screen battle(pc,ally1,ec):
                 text ec.name+" HP: [ec.hp]      MP: [ec.mp]" size 22 xalign 10
 
 
-
 screen battlechoice(Actr, choice):
+        add "idledance"
         modal True
         frame: #This frame is for the battle buttons
 

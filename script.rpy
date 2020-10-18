@@ -1,12 +1,10 @@
 
-#init:
-#    image movie = Movie(size=(1280,720),xalign=0.5,yalign=0.5)
+image idledance = Movie(play="images/dtyd.webm",size=(1280,720),xalign=0.5,yalign=0.5)
 
 #label rubyintro:
 #    scene black
 #    show movie
-#    with dissolve
-
+#
 #    play movie "images/dtyd.webm" #If yer shit aint workin it's because of this
 #    $ renpy.transition(fade)#optional
 #    $ renpy.pause(126, hard=True)# substitute "1" with video length in seconds. Stop players from skipping the video. If you want to allow skipping, remove ", hard=True"
@@ -34,7 +32,7 @@ init python:
         Alliedcharacter1.isguarding = False
 
 
-        #renpy.call("rubyintro")
+
         narrator("Select the amount of MP to allocate.", interact=True)
         #SCALABILITY PROBLEM: Will have to detect what allies one has in the future; 1, 2, 3, whether you have ally X or Y, etcetc.
         while(end != "END"):
@@ -63,9 +61,11 @@ init python:
             return action
 
     def playerturn(Actr = None, skipSelect = False):
+
         if(Actr != None):
             Actr.nompflag = False
         while(Playercharacter.turnover == False or Alliedcharacter1.turnover == False ): #while neither the player nor ally's turns are over
+            #renpy.call("rubyintro")
             action = " " #action is declared
             if(skipSelect == False): #If we are not recursed due to using a spell, a talk action, or low mana
                 Actr = get_characters_turn() #then get which character's turn it is
