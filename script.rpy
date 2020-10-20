@@ -1,5 +1,31 @@
 
-image idledance = Movie(play="images/dtyd.webm",size=(1280,720),xalign=0.5,yalign=0.5)
+#image idledance = Movie(play="images/dtyd.webm",size=(1280,720),xalign=0.5,yalign=0.5)
+
+
+image aine_attack1= Movie(play="images/p1_an/AINE_ATTACK1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image aine_attack2= Movie(play="images/p1_an/AINE_ATTACK2.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image aine_attack3= Movie(play="images/p1_an/aine_attack3.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image aine_attack4= Movie(play="images/p1_an/AINE_ATTACK4.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image aine_heal1= Movie(play="images/p1_an/AINE_HEAL1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image aine_heal2= Movie(play="images/p1_an/AINE_HEAL2.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image aine_heal3= Movie(play="images/p1_an/AINE_HEAL3.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image aine_idle1= Movie(play="images/p1_an/AINE_IDLE1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image aine_wc= Movie(play="images/p1_an/AINE_WC.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image ainezhp_idle1= Movie(play="images/p1_an/AINE0HP_IDLE1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image ainezhp_idle2= Movie(play="images/p1_an/AINE0HP_IDLE2.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image ainezhp_idle3= Movie(play="images/p1_an/AINE0HP_IDLE3.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image ainezhp_idle4= Movie(play="images/p1_an/AINE0HP_IDLE4.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image ainezhp_idle5= Movie(play="images/p1_an/AINE0HP_IDLE5.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image cj_attack1= Movie(play="images/p1_an/CJ_ATTACK1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image cj_attack2= Movie(play="images/p1_an/CJ_ATTACK2.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image cj_attacked1= Movie(play="images/p1_an/CJ_ATTACKED1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image cj_cast1= Movie(play="images/p1_an/CJ_CAST1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image cj_cast2= Movie(play="images/p1_an/CJ_CAST.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image cj_idle1= Movie(play="images/p1_an/CJ_IDLE1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image cj_idle2= Movie(play="images/p1_an/CJ_IDLE2.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image cro_attack1= Movie(play="images/p1_an/CRO_ATTACK1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image hostage_attacked1= Movie(play="images/p1_an/HOSTAGE_ATTACKED1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image hostage_attacked2= Movie(play="images/p1_an/HOSTAGE_ATTACKED2.webm", size=(1280,720),xalign=0.5,yalign=0.5)
 
 #label rubyintro:
 #    scene black
@@ -57,7 +83,7 @@ init python:
                 Actr.turnover = True
                 narrator("You ready yourself for the enemy's next attack.")
             if(choice!="Guard"):
-                action = renpy.call_screen("battlechoice",Actr,choice)
+                action = renpy.call_screen("battlechoice",Actr,choice,random.randrange(0,2),"idle")
             return action
 
     def playerturn(Actr = None, skipSelect = False):
@@ -69,10 +95,11 @@ init python:
             action = " " #action is declared
             if(skipSelect == False): #If we are not recursed due to using a spell, a talk action, or low mana
                 Actr = get_characters_turn() #then get which character's turn it is
-            choice = renpy.call_screen("battle",Playercharacter,Alliedcharacter1,Enemycharacter) #we get the choice from the battle screen
+            choice = renpy.call_screen("battle",Playercharacter,Alliedcharacter1,Enemycharacter,random.randrange(0,2),"idle",Actr) #we get the choice from the battle screen
             action = get_characters_action(Actr,choice) #we get the action from the action screen
             while(action=="b"): #if the player chose "BACK" , do the above again
-                choice = renpy.call_screen("battle",Playercharacter,Alliedcharacter1,Enemycharacter)
+
+                choice = renpy.call_screen("battle",Playercharacter,Alliedcharacter1,Enemycharacter,random.randrange(0,2),"idle",Actr)
                 action = get_characters_action(Actr,choice)
             if(choice =="Attack"): #if choice was attack
                 Actr.attackchoice(action,Enemycharacter) #parse which attack was chosen
