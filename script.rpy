@@ -63,6 +63,7 @@ init python:
         #SCALABILITY PROBLEM: Will have to detect what allies one has in the future; 1, 2, 3, whether you have ally X or Y, etcetc.
         while(end != "END"):
              end = renpy.call_screen("mpallocation",Playercharacter ,Alliedcharacter1,end)
+
         narrator(Playercharacter.name+" now has "+ str(Playercharacter.mp) + " MP" )
         narrator(Alliedcharacter1.name+" now has "+ str(Alliedcharacter1.mp) + " MP" )
 
@@ -84,9 +85,12 @@ init python:
                 narrator("You ready yourself for the enemy's next attack.")
             if(choice!="Guard"):
                 action = renpy.call_screen("battlechoice",Actr,choice,random.randrange(0,2),"idle")
+
+
             return action
 
     def playerturn(Actr = None, skipSelect = False):
+
 
         if(Actr != None):
             Actr.nompflag = False
@@ -95,11 +99,14 @@ init python:
             action = " " #action is declared
             if(skipSelect == False): #If we are not recursed due to using a spell, a talk action, or low mana
                 Actr = get_characters_turn() #then get which character's turn it is
+            renpy.show_screen("anim",random.randrange(0,2),"idle",Actr)
             choice = renpy.call_screen("battle",Playercharacter,Alliedcharacter1,Enemycharacter,random.randrange(0,2),"idle",Actr) #we get the choice from the battle screen
+
             action = get_characters_action(Actr,choice) #we get the action from the action screen
             while(action=="b"): #if the player chose "BACK" , do the above again
 
                 choice = renpy.call_screen("battle",Playercharacter,Alliedcharacter1,Enemycharacter,random.randrange(0,2),"idle",Actr)
+
                 action = get_characters_action(Actr,choice)
             if(choice =="Attack"): #if choice was attack
                 Actr.attackchoice(action,Enemycharacter) #parse which attack was chosen
@@ -159,8 +166,11 @@ label start: #game starts here
 
     #Bando thinks after load, splashscreen, main menu, finaly main menu, lets some option in main menu start a battle
         while(Enemycharacter.hp > 0 and Playercharacter.hp > 0):
+
+
             roundstart()
             if(Playercharacter.hp> 0):
+
                 playerturn()
             if(Enemycharacter.hp > 0):
                 enemyturn()

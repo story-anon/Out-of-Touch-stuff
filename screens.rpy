@@ -1521,6 +1521,17 @@ style slider_pref_slider:
 ###ANIM SCREENS###
 
 
+screen anim(randnum, anim_type,Actr,azhp_flag = False):
+    if(anim_type == "idle"):
+        if Actr.name == "CJ" and azhp_flag == False:
+            if(randnum==0):
+                add "cj_idle1"
+            if(randnum==1):
+                add "cj_idle2"
+        if Actr.name == "Áine":
+                add "aine_idle1"
+
+
 
 
 
@@ -1549,16 +1560,6 @@ screen mpallocation(pc,ally1,end): #SCALABILITY ISSUES
                 imagebutton idle "enter.png" action Function(setend, end)
 
 screen battle(pc,ally1,ec,randnum,anim_type,Actr,azhp_flag = False):
-
-        if(anim_type == "idle"):
-            if Actr.name == "CJ" and azhp_flag == False:
-                if(randnum==0):
-                    add "cj_idle1"
-                if(randnum==1):
-                    add "cj_idle2"
-            if Actr.name == "Áine":
-                    add "aine_idle1"
-
 
         modal True
         frame: #This frame is for the battle buttons
@@ -1602,14 +1603,8 @@ screen battle(pc,ally1,ec,randnum,anim_type,Actr,azhp_flag = False):
 
 
 screen battlechoice(Actr, choice,randnum,anim_type,azhp_flag=False):
-        if(anim_type == "idle"): #exploring the upper limits of how to write myself into corners
-                if Actr.name == "CJ" and azhp_flag == False:
-                    if(randnum==0):
-                            add "cj_idle1"
-                    if(randnum==1):
-                            add "cj_idle2"
-                if Actr.name == "Áine":
-                    add "aine_idle1"
+
+
         modal True
         frame: #This frame is for the battle buttons
 
