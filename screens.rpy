@@ -1530,6 +1530,8 @@ screen anim(randnum, anim_type,Actr,azhp_flag = False):
                 add "cj_idle2"
         if Actr.name == "Áine":
                 add "aine_idle1"
+    if(anim_type == "heal"):
+        add "aine_heal1"
 
 
 

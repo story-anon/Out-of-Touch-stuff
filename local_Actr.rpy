@@ -167,7 +167,7 @@ init python:
 
                         if (final_dmg < 0):
                             final_dmg = 0
-                        
+
                         #renpy.movie_cutscene("dtyd.webm") #Plays a movie you can cancel and skip out of
                         if (self.tidetokens == 0):
                             narrator("Your dice rolls were [" + ''.join(str(x) + "," for x in dmg_roll) + "] Plus your DMG of [" + str(self.str) + "] for a total of [" + str((sum(dmg_roll) + self.str)) + "] against the enemy's [" + str(target.armor) + "] armor. Hitting for [" + str(final_dmg) + "]")  # Don't worry about it.
@@ -226,6 +226,8 @@ init python:
                         actrtobuff.hp += heal_roll_sum
                         if(actrtobuff.hp > actrtobuff.mhp):
                             actrtobuff.hp = actrtobuff.mhp
+                        
+                        renpy.show_screen("anim",random.randrange(0,2),"heal",self)
                         narrator("Your dice rolls were ["+''.join(str(x)+"," for x in heal_roll)+ "]+4" + ", healing " +actrtobuff.name+" for "+str(heal_roll_sum) + " HP")
 
 
