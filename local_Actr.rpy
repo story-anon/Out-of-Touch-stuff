@@ -226,8 +226,10 @@ init python:
                         actrtobuff.hp += heal_roll_sum
                         if(actrtobuff.hp > actrtobuff.mhp):
                             actrtobuff.hp = actrtobuff.mhp
-                        
+
                         renpy.show_screen("anim",random.randrange(0,2),"heal",self)
+                        renpy.pause(delay=5)
+                        renpy.show_screen("anim",random.randrange(0,2),"idle",self)
                         narrator("Your dice rolls were ["+''.join(str(x)+"," for x in heal_roll)+ "]+4" + ", healing " +actrtobuff.name+" for "+str(heal_roll_sum) + " HP")
 
 
