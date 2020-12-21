@@ -1528,10 +1528,32 @@ screen anim(randnum, anim_type,Actr,azhp_flag = False):
                 add "cj_idle1"
             if(randnum==1):
                 add "cj_idle2"
+        if(Actr.name == "CJ" and azhp_flag == True):
+            if(randnum == 0):
+                add "ainezhp_idle1"
+            if(randnum == 1):
+                add "ainezhp_idle2"
         if Actr.name == "Áine":
                 add "aine_idle1"
     if(anim_type == "heal"):
-        add "aine_heal1"
+                add "aine_heal1"
+    if(anim_type== "cast"):
+                add "cj_cast1"
+    if(anim_type=="attack"):
+            if(Actr.name == "CJ"):
+                    add "cj_attack1"
+            if(Actr.name == "Áine"):
+                    add "aine_attack1"
+            if(Actr.name == "Cro'Dhearg"):
+                    add "cro_attack1"
+    if(anim_type=="attacked"):
+        if(Actr.name == "CJ"):
+            add "cj_attacked1"
+        if(Actr.name == "Áine"):
+            add "cj_attacked1" #Aine being attacked should go here
+
+
+
 
 
 

@@ -2,30 +2,30 @@
 #image idledance = Movie(play="images/dtyd.webm",size=(1280,720),xalign=0.5,yalign=0.5)
 
 
-image aine_attack1= Movie(play="images/p1_an/AINE_ATTACK1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image aine_attack2= Movie(play="images/p1_an/AINE_ATTACK2.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image aine_attack3= Movie(play="images/p1_an/aine_attack3.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image aine_attack4= Movie(play="images/p1_an/AINE_ATTACK4.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image aine_heal2= Movie(play="images/p1_an/AINE_HEAL2.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image aine_heal3= Movie(play="images/p1_an/AINE_HEAL3.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image aine_attack1= Movie(play="images/p1_an/AINE_ATTACK1.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image aine_attack2= Movie(play="images/p1_an/AINE_ATTACK2.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image aine_attack3= Movie(play="images/p1_an/aine_attack3.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image aine_attack4= Movie(play="images/p1_an/AINE_ATTACK4.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image aine_heal1= Movie(play="images/p1_an/AINE_HEAL1.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image aine_heal2= Movie(play="images/p1_an/AINE_HEAL2.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image aine_heal3= Movie(play="images/p1_an/AINE_HEAL3.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
 image aine_idle1= Movie(play="images/p1_an/AINE_IDLE1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image aine_wc= Movie(play="images/p1_an/AINE_WC.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image ainezhp_idle1= Movie(play="images/p1_an/AINE0HP_IDLE1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image ainezhp_idle2= Movie(play="images/p1_an/AINE0HP_IDLE2.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image ainezhp_idle3= Movie(play="images/p1_an/AINE0HP_IDLE3.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image ainezhp_idle4= Movie(play="images/p1_an/AINE0HP_IDLE4.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image ainezhp_idle5= Movie(play="images/p1_an/AINE0HP_IDLE5.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image cj_attack1= Movie(play="images/p1_an/CJ_ATTACK1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image cj_attack2= Movie(play="images/p1_an/CJ_ATTACK2.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image cj_attacked1= Movie(play="images/p1_an/CJ_ATTACKED1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image cj_cast1= Movie(play="images/p1_an/CJ_CAST1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image cj_cast2= Movie(play="images/p1_an/CJ_CAST.webm", size=(1280,720),xalign=0.5,yalign=0.5)
+image aine_wc= Movie(play="images/p1_an/AINE_WC.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image ainezhp_idle1= Movie(play="images/p1_an/AINE0HP_IDLE1.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image ainezhp_idle2= Movie(play="images/p1_an/AINE0HP_IDLE2.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image ainezhp_idle3= Movie(play="images/p1_an/AINE0HP_IDLE3.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image ainezhp_idle4= Movie(play="images/p1_an/AINE0HP_IDLE4.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image ainezhp_idle5= Movie(play="images/p1_an/AINE0HP_IDLE5.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image cj_attack1= Movie(play="images/p1_an/CJ_ATTACK1.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image cj_attack2= Movie(play="images/p1_an/CJ_ATTACK2.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image cj_attacked1= Movie(play="images/p1_an/CJ_ATTACKED1.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image cj_cast1= Movie(play="images/p1_an/CJ_CAST1.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image cj_cast2= Movie(play="images/p1_an/CJ_CAST.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
 image cj_idle1= Movie(play="images/p1_an/CJ_IDLE1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
 image cj_idle2= Movie(play="images/p1_an/CJ_IDLE2.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image cro_attack1= Movie(play="images/p1_an/CRO_ATTACK1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image hostage_attacked1= Movie(play="images/p1_an/HOSTAGE_ATTACKED1.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image hostage_attacked2= Movie(plaxy="images/p1_an/HOSTAGE_ATTACKED2.webm", size=(1280,720),xalign=0.5,yalign=0.5)
-image aine_heal1= Movie(play="images/p1_an/AINE_HEAL1.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image cro_attack1= Movie(play="images/p1_an/CRO_ATTACK1.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image hostage_attacked1= Movie(play="images/p1_an/HOSTAGE_ATTACKED1.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
+image hostage_attacked2= Movie(plaxy="images/p1_an/HOSTAGE_ATTACKED2.webm",loop=False, size=(1280,720),xalign=0.5,yalign=0.5)
 
 #label rubyintro:
 #    scene black
@@ -44,8 +44,8 @@ init python:
     #Actr Declaration
     #                           Actr(name, atk, defense, hp, mhp, mp, str, mmp, agi, armor, attacks=[], magic={"SPELLNAME":"BUFF OR DMG"}, abilities={"SPELLNAME":"BUFF OR DMG"}, items=[], dice=2) ###dice = 2 means default is 2, that's why enemy has a 3 there.
     Playercharacter = Actr("CJ",0,14,20,20,5,0,5,5,15,["Attack", "Talk"],{"One On One(1MP)":"BUFF","Man Eater(1MP)":"BUFF"})
-    Alliedcharacter1 = Actr("Áine",8,16,40,40,0,11,5,4,18,["Attack"],{"Gentle Current(1MP)":"BUFF","Underswell(2MP)":"BUFF","Riptide(3MP)":"BUFF","Wave Crash(3MP)":"DMG"})
     Enemycharacter = Actr("Cro'Dhearg",9,15,60,60,0,14,5,5,18,["Attack"],3)
+    Alliedcharacter1 = Actr("Áine",8,16,40,40,0,11,5,4,18,["Attack"],{"Gentle Current(1MP)":"BUFF","Underswell(2MP)":"BUFF","Riptide(3MP)":"BUFF","Wave Crash(3MP)":"DMG"})
 
     def setend(end): #Likely unnecessary, can be trimmed out
         return "END"
@@ -72,6 +72,10 @@ init python:
                 Actr = renpy.display_menu([ (Playercharacter.name, Playercharacter), (Alliedcharacter1.name, Alliedcharacter1)]) #Get which char will move
                 while(Actr.turnover == True): #While selected char's turn is over, get which char will move
                     narrator(Actr.name + "Has already gone this turn!")
+                    narrator("Which character will move?", interact=False)
+                    Actr = renpy.display_menu([ (Playercharacter.name, Playercharacter), (Alliedcharacter1.name, Alliedcharacter1)])
+                while(Actr.hp <= 0):
+                    narrator(Actr.name + "is dead!")
                     narrator("Which character will move?", interact=False)
                     Actr = renpy.display_menu([ (Playercharacter.name, Playercharacter), (Alliedcharacter1.name, Alliedcharacter1)])
                 narrator(Actr.name + "'s turn!'")
@@ -136,7 +140,10 @@ init python:
             target = Playercharacter
         if(rand_target ==1):
             target = Alliedcharacter1
+
         narrator("Enemy is attacking "+target.name+"!")
+        renpy.show_screen("anim",random.randrange(0,2),"attack",Actr)
+        renpy.pause(delay=5)
         choice = "Attack"
         if(choice =="Attack"):
               action = "Attack"
@@ -150,11 +157,16 @@ init python:
 
               if(attack_sum == Enemycharacter.defense+wavebonus or attack_sum > Enemycharacter.defense+wavebonus): #You hit!
                   narrator("Enemy hits!")
+
                   dmg_roll = Actr.damage(target)
                   dmg_roll_sum =  (sum(dmg_roll)+Actr.str)
                   final_dmg = dmg_roll_sum - target.armor
                   if(final_dmg < 0):
                        final_dmg = 0
+
+                  renpy.show_screen("anim",random.randrange(0,2),"attacked",target)
+                  renpy.pause(delay=5)
+                  renpy.show_screen("anim",random.randrange(0,2),"idle",target)
                   narrator("Enemy's dice rolls were ["+''.join(str(x)+"," for x in dmg_roll)+ "] Plus their DMG of ["+str(Actr.str) + "] for a total of [" + str(dmg_roll_sum ) +"] against "+target.name+"'s '["+str(target.armor)+"] armor. Hitting for [" +str(final_dmg)+"]")#Don't worry about it.
                   target.hp -= final_dmg
                   if(Playercharacter.hp <=0):

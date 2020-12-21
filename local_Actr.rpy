@@ -148,7 +148,11 @@ init python:
                     c("!!!!!!!")
 
             if (action == "Attack"):
+                renpy.show_screen("anim",random.randrange(0,2),"attack",self)
+                renpy.pause(delay=5)
+                renpy.show_screen("anim",random.randrange(0,2),"idle",self)
                 if (self.name != "CJ"):
+
                     attack_roll = self.attack(action)  # Obtain the dice rolls
                     attack_sum = sum(attack_roll) + self.atk  # Obtain the sum of dice rolls and add the actor's ATK rating
                     narrator("Your dice rolls were [" + ''.join(str(x) + "," for x in attack_roll) + "] Plus your ATK of [" + str(self.atk) + "] for a total of [" + str(attack_sum) + "] against the enemy's [" + str(target.defense) + "] defense.")  # Don't worry about it.
@@ -169,6 +173,8 @@ init python:
                             final_dmg = 0
 
                         #renpy.movie_cutscene("dtyd.webm") #Plays a movie you can cancel and skip out of
+
+
                         if (self.tidetokens == 0):
                             narrator("Your dice rolls were [" + ''.join(str(x) + "," for x in dmg_roll) + "] Plus your DMG of [" + str(self.str) + "] for a total of [" + str((sum(dmg_roll) + self.str)) + "] against the enemy's [" + str(target.armor) + "] armor. Hitting for [" + str(final_dmg) + "]")  # Don't worry about it.
                         else:
@@ -189,6 +195,9 @@ init python:
                def SUBFUNCTION_DICEBUFF(stat): #this feels so wrong but looks so good and python apparently specifically supports it. Essentially this is like eating junk food for programming. Or modern art. This is ethically wrong.
                    narrator("Choose who you want to give an extra "+stat+" dice to for 1mp")
                    actrtobuff = renpy.display_menu([  (ally.name, ally)])
+                   renpy.show_screen("anim",random.randrange(0,2),"cast",self)
+                   renpy.pause(delay=5)
+                   renpy.show_screen("anim",random.randrange(0,2),"idle",self)
                    narrator(actrtobuff.name + " will get an extra "+stat+" dice next turn!")
                    actrtobuff.extraATKdice += 1 if (stat=="ATK") else 0
                    actrtobuff.extraSTRdice += 1 if (stat=="STR") else 0
