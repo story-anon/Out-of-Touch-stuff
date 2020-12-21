@@ -1522,18 +1522,19 @@ style slider_pref_slider:
 
 
 screen anim(randnum, anim_type,Actr,azhp_flag = (Alliedcharacter1.hp <= 0)):
-    if(anim_type == "idle"):
+    if(anim_type == "idle"): #There may be a way to simplify this function.
         if (Actr.name == "CJ"):
             if(azhp_flag == False):
-                if(randnum==0):
+                if(randnum==0 or randnum == 1):
                     add "cj_idle1"
-                if(randnum==1):
+                if(randnum==2 or randnum == 3 or randnum == 4):
                     add "cj_idle2"
             elif(azhp_flag == True):
                 if(randnum==0):
                     add "ainezhp_idle1"
                 if(randnum==1):
                     add "ainezhp_idle2"
+
 
         if Actr.name == "Áine":
                 add "aine_idle1"

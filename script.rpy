@@ -88,7 +88,7 @@ init python:
                 Actr.turnover = True
                 narrator("You ready yourself for the enemy's next attack.")
             if(choice!="Guard"):
-                action = renpy.call_screen("battlechoice",Actr,choice,random.randrange(0,2),"idle",(Alliedcharacter1.hp <= 0) )
+                action = renpy.call_screen("battlechoice",Actr,choice,random.randrange(0,5),"idle",(Alliedcharacter1.hp <= 0) )
 
 
             return action
@@ -108,14 +108,14 @@ init python:
 
 
 
-            renpy.show_screen("anim",random.randrange(0,2),"idle",Actr)
+            renpy.show_screen("anim",random.randrange(0,5),"idle",Actr)
 
-            choice = renpy.call_screen("battle",Playercharacter,Alliedcharacter1,Enemycharacter,random.randrange(0,2),"idle",Actr) #we get the choice from the battle screen
+            choice = renpy.call_screen("battle",Playercharacter,Alliedcharacter1,Enemycharacter,random.randrange(0,5),"idle",Actr) #we get the choice from the battle screen
 
             action = get_characters_action(Actr,choice) #we get the action from the action screen
             while(action=="b"): #if the player chose "BACK" , do the above again
 
-                choice = renpy.call_screen("battle",Playercharacter,Alliedcharacter1,Enemycharacter,random.randrange(0,2),"idle",Actr)
+                choice = renpy.call_screen("battle",Playercharacter,Alliedcharacter1,Enemycharacter,random.randrange(0,5),"idle",Actr)
 
                 action = get_characters_action(Actr,choice)
             if(choice =="Attack"): #if choice was attack
@@ -144,7 +144,7 @@ init python:
             target = Alliedcharacter1
 
         narrator("Enemy is attacking "+target.name+"!")
-        renpy.show_screen("anim",random.randrange(0,2),"attack",Actr)
+        renpy.show_screen("anim",random.randrange(0,5),"attack",Actr)
         renpy.pause(delay=5)
         choice = "Attack"
         if(choice =="Attack"):
@@ -166,7 +166,7 @@ init python:
                   if(final_dmg < 0):
                        final_dmg = 0
 
-                  renpy.show_screen("anim",random.randrange(0,2),"attacked",target)
+                  renpy.show_screen("anim",random.randrange(0,5),"attacked",target)
                   renpy.pause(delay=5)
                   if(target.name == "CJ" and target.mp >0):
                       target.mp-=1

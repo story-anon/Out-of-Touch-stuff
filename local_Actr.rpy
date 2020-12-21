@@ -148,9 +148,9 @@ init python:
                     c("!!!!!!!")
 
             if (action == "Attack"):
-                renpy.show_screen("anim",random.randrange(0,2),"attack",self)
+                renpy.show_screen("anim",random.randrange(0,5),"attack",self)
                 renpy.pause(delay=5)
-                renpy.show_screen("anim",random.randrange(0,2),"idle",self)
+                renpy.show_screen("anim",random.randrange(0,5),"idle",self)
                 if (self.name != "CJ"):
 
                     attack_roll = self.attack(action)  # Obtain the dice rolls
@@ -195,9 +195,9 @@ init python:
                def SUBFUNCTION_DICEBUFF(stat): #this feels so wrong but looks so good and python apparently specifically supports it. Essentially this is like eating junk food for programming. Or modern art. This is ethically wrong.
                    narrator("Choose who you want to give an extra "+stat+" dice to for 1mp")
                    actrtobuff = renpy.display_menu([  (ally.name, ally)])
-                   renpy.show_screen("anim",random.randrange(0,2),"cast",self)
+                   renpy.show_screen("anim",random.randrange(0,5),"cast",self)
                    renpy.pause(delay=5)
-                   renpy.show_screen("anim",random.randrange(0,2),"idle",self)
+                   renpy.show_screen("anim",random.randrange(0,5),"idle",self)
                    narrator(actrtobuff.name + " will get an extra "+stat+" dice next turn!")
                    actrtobuff.extraATKdice += 1 if (stat=="ATK") else 0
                    actrtobuff.extraSTRdice += 1 if (stat=="STR") else 0
@@ -236,9 +236,9 @@ init python:
                         if(actrtobuff.hp > actrtobuff.mhp):
                             actrtobuff.hp = actrtobuff.mhp
 
-                        renpy.show_screen("anim",random.randrange(0,2),"heal",self)
+                        renpy.show_screen("anim",random.randrange(0,5),"heal",self)
                         renpy.pause(delay=5)
-                        renpy.show_screen("anim",random.randrange(0,2),"idle",self)
+                        renpy.show_screen("anim",random.randrange(0,5),"idle",self)
                         narrator("Your dice rolls were ["+''.join(str(x)+"," for x in heal_roll)+ "]+4" + ", healing " +actrtobuff.name+" for "+str(heal_roll_sum) + " HP")
 
 
