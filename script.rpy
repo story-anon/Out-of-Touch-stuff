@@ -45,7 +45,7 @@ init python:
     #                           Actr(name, atk, defense, hp, mhp, mp, str, mmp, agi, armor, attacks=[], magic={"SPELLNAME":"BUFF OR DMG"}, abilities={"SPELLNAME":"BUFF OR DMG"}, items=[], dice=2) ###dice = 2 means default is 2, that's why enemy has a 3 there.
     Playercharacter = Actr("CJ",0,14,20,20,5,0,5,5,15,["Attack", "Talk"],{"One On One(1MP)":"BUFF","Man Eater(1MP)":"BUFF"})
     Enemycharacter = Actr("Cro'Dhearg",9,15,60,60,0,14,5,5,18,["Attack"],3)
-    Alliedcharacter1 = Actr("Áine",8,16,40,40,0,11,5,4,18,["Attack"],{"Gentle Current(1MP)":"BUFF","Underswell(2MP)":"BUFF","Riptide(3MP)":"BUFF","Wave Crash(3MP)":"DMG"})
+    Alliedcharacter1 = Actr("Áine",8,16,0,40,0,11,5,4,18,["Attack"],{"Gentle Current(1MP)":"BUFF","Underswell(2MP)":"BUFF","Riptide(3MP)":"BUFF","Wave Crash(3MP)":"DMG"})
 
     def setend(end): #Likely unnecessary, can be trimmed out
         return "END"
@@ -88,7 +88,7 @@ init python:
                 Actr.turnover = True
                 narrator("You ready yourself for the enemy's next attack.")
             if(choice!="Guard"):
-                action = renpy.call_screen("battlechoice",Actr,choice,random.randrange(0,2),"idle")
+                action = renpy.call_screen("battlechoice",Actr,choice,random.randrange(0,2),"idle",(Alliedcharacter1.hp <= 0) )
 
 
             return action
@@ -98,6 +98,8 @@ init python:
 
         if(Actr != None):
             Actr.nompflag = False
+        if(Alliedcharacter1.hp <=0 ):
+            Alliedcharacter1.turnover = True
         while(Playercharacter.turnover == False or Alliedcharacter1.turnover == False ): #while neither the player nor ally's turns are over
             #renpy.call("rubyintro")
             action = " " #action is declared
@@ -166,9 +168,13 @@ init python:
 
                   renpy.show_screen("anim",random.randrange(0,2),"attacked",target)
                   renpy.pause(delay=5)
-                  renpy.show_screen("anim",random.randrange(0,2),"idle",target)
-                  narrator("Enemy's dice rolls were ["+''.join(str(x)+"," for x in dmg_roll)+ "] Plus their DMG of ["+str(Actr.str) + "] for a total of [" + str(dmg_roll_sum ) +"] against "+target.name+"'s '["+str(target.armor)+"] armor. Hitting for [" +str(final_dmg)+"]")#Don't worry about it.
-                  target.hp -= final_dmg
+                  if(target.name == "CJ" and target.mp >0):
+                      target.mp-=1
+                      narrator("CJ lost 1 mp!")
+                  else:
+                      narrator("Enemy's dice rolls were ["+''.join(str(x)+"," for x in dmg_roll)+ "] Plus their DMG of ["+str(Actr.str) + "] for a total of [" + str(dmg_roll_sum ) +"] against "+target.name+"'s '["+str(target.armor)+"] armor. Hitting for [" +str(final_dmg)+"]")#Don't worry about it.
+                      target.hp -= final_dmg
+
                   if(Playercharacter.hp <=0):
                     return
                   if(target.isguarding==True):
