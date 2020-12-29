@@ -1521,7 +1521,9 @@ style slider_pref_slider:
 ###ANIM SCREENS###
 
 
-screen anim(randnum, anim_type,Actr,azhp_flag = (Alliedcharacter1.hp <= 0)):
+screen anim(randnum, anim_type,Actr,ally = None, azhp_flag = False):
+    if ally!= None:
+        $azhp_flag =  (ally.hp <= 0)
     if(anim_type == "idle"): #There may be a way to simplify this function.
         if (Actr.name == "CJ"):
             if(azhp_flag == False):
@@ -1530,9 +1532,9 @@ screen anim(randnum, anim_type,Actr,azhp_flag = (Alliedcharacter1.hp <= 0)):
                 if(randnum==2 or randnum == 3 or randnum == 4):
                     add "cj_idle2"
             elif(azhp_flag == True):
-                if(randnum==0):
+                if(randnum==0 or randnum==1):
                     add "ainezhp_idle1"
-                if(randnum==1):
+                if(randnum==2 or randnum == 3 or randnum ==4):
                     add "ainezhp_idle2"
 
 
@@ -1586,7 +1588,7 @@ screen mpallocation(pc,ally1,end): #SCALABILITY ISSUES
 
                 imagebutton idle "enter.png" action Function(setend, end)
 
-screen battle(pc,ally1,ec,randnum,anim_type,Actr,azhp_flag = False):
+screen battle(pc,ally1,ec,hostage):
 
         modal True
         frame: #This frame is for the battle buttons
@@ -1625,7 +1627,11 @@ screen battle(pc,ally1,ec,randnum,anim_type,Actr,azhp_flag = False):
                 xpos 20
                 ypos 5 #find a way to to tabs, because this space formatting is garbage
                 text pc.name+"         HP: [pc.hp]        MP: [pc.mp]" size 22 xalign 10
-                text ally1.name+"  HP: [ally1.hp]   MP: [ally1.mp] Wave Tokens: [ally1.wavetokens] Tide Tokens:[ally1.tidetokens]" size 22 xalign 10
+                if ally1.name != "":
+                    text ally1.name+"  HP: [ally1.hp]   MP: [ally1.mp] Wave Tokens: [ally1.wavetokens] Tide Tokens:[ally1.tidetokens]" size 22 xalign 10
+
+                else:
+                    text "Hostage HP: [hostage.hp]" size 22 xalign 10
                 text ec.name+" HP: [ec.hp]      MP: [ec.mp]" size 22 xalign 10
 
 

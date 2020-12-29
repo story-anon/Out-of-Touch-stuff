@@ -2,6 +2,7 @@ init python:
     import random
     class Actr:
         #Initial Implementation goals.
+            #'''
             #1) Webms need to play on every screen that shows in combat. There needs to be a way to randomly select which webm plays for certain screens (so it cycles through different angles for idle/cast animations)
 
             #2) Enemy NPC needs better behavior. She should do her normal attack 3-4 times before doing one of her special attacks (either a single target 2x hit attack or an AOE attack that hits both CJ and Aine).
@@ -18,6 +19,7 @@ init python:
             #5.1) Enemy NPC will try to "block" healing to the 'Hostage'. All this means is that the first heal spell to the 'Hostage' will succeed, after that the Enemy needs to be damaged once or twice before heal spells will work again on the 'Hostage'.
 
             #6) Add little screen where abilities are shown that describes what each ability/spell does.
+            #'''
         name = "you forgot to add a name retard"
         atk = 0
         defense = 0
@@ -59,8 +61,6 @@ init python:
             self.dice = dice
 
         def mpallocationincrement(self, pc):
-
-
             if (self.mp < 3 and pc.mp > 0):
                 self.mp += 1
                 pc.mp -= 1
@@ -140,7 +140,7 @@ init python:
                 self.extraSTRdice = 0
                 return diceroll  # Return the damage number result and the extra damage the spell does
 
-        def attackchoice(self, action,target):
+        def attackchoice(self, action,target): #monolith
             if (action == "Talk"):
                 c = Character(target.name)
                 x = renpy.display_menu([("Call him a faggot", "owned")])
@@ -191,7 +191,7 @@ init python:
                     narrator("CJs fists went right through them!")
                     narrator("0 Damage done")
 
-        def magicchoice(self,action,enemy,pc,ally):
+        def magicchoice(self,action,enemy,pc,ally): #monolith, utter monolith, please fix.
                def SUBFUNCTION_DICEBUFF(stat): #this feels so wrong but looks so good and python apparently specifically supports it. Essentially this is like eating junk food for programming. Or modern art. This is ethically wrong.
                    narrator("Choose who you want to give an extra "+stat+" dice to for 1mp")
                    actrtobuff = renpy.display_menu([  (ally.name, ally)])
@@ -256,12 +256,12 @@ init python:
                      if("DMG" in type):
                         attack_roll = self.attack(action)
                         attack_sum = sum(attack_roll) + self.atk-2 #Obtain the sum of dice rolls and add the actor's ATK rating
-                        narrator("Your dice rolls were ["+''.join(str(x)+"," for x in attack_roll)+ "] Plus wave crash's ATK of ["+str(self.atk-2) + "] for a total of [" + str(attack_sum ) +"] against the enemy's ["+str(Enemycharacter.defense)+"] defense.")#Don't worry about it.
+                        narrator("Your dice rolls were ["+''.join(str(x)+"," for x in attack_roll)+ "] Plus wave crash's ATK of ["+str(self.atk-2) + "] for a total of [" + str(attack_sum ) +"] against the enemy's ["+str(enemy.defense)+"] defense.")#Don't worry about it.
                         self.mp-=mpneeded
-                        if(attack_sum == Enemycharacter.defense or attack_sum > Enemycharacter.defense): #You hit!
+                        if(attack_sum == enemy.defense or attack_sum > enemy.defense): #You hit!
                             narrator("You hit!")
                             dmg_roll = self.magicdamage(action)
-                            dmg_roll_sum =  (sum(dmg_roll)+self.str+3) - Enemycharacter.armor
+                            dmg_roll_sum =  (sum(dmg_roll)+self.str+3) - enemy.armor
                             displayable = dmg_roll_sum
                             mult_val = 0
                             if(self.name == "Áine" and self.tidetokens > 0 ):
@@ -271,15 +271,15 @@ init python:
                             if(final_dmg < 0):
                                  final_dmg = 0
                             if(self.tidetokens == 0):
-                                narrator("Your dice rolls were ["+''.join(str(x)+"," for x in dmg_roll)+ "] Plus wave crash's POW of ["+str(self.str+3) + "] for a total of [" + str( (sum(dmg_roll)+self.str+3) ) +"] against the enemy's ["+str(Enemycharacter.armor)+"] armor. Hitting for [" +str(final_dmg)+"]")#Don't worry about it.
+                                narrator("Your dice rolls were ["+''.join(str(x)+"," for x in dmg_roll)+ "] Plus wave crash's POW of ["+str(self.str+3) + "] for a total of [" + str( (sum(dmg_roll)+self.str+3) ) +"] against the enemy's ["+str(enemy.armor)+"] armor. Hitting for [" +str(final_dmg)+"]")#Don't worry about it.
                             else:
-                                narrator("Your dice rolls were ["+''.join(str(x)+"," for x in dmg_roll)+ "]" + "plus wave crash's POW of "+"["+str(self.str+3)+"]"+" minus the enemy's armor of "+str(Enemycharacter.armor) + "for a total of "+str(displayable)+" multiplied by your tide token bonus of "+ str(mult_val) + "for a total of " + str(final_dmg)+" damage")
+                                narrator("Your dice rolls were ["+''.join(str(x)+"," for x in dmg_roll)+ "]" + "plus wave crash's POW of "+"["+str(self.str+3)+"]"+" minus the enemy's armor of "+str(enemy.armor) + "for a total of "+str(displayable)+" multiplied by your tide token bonus of "+ str(mult_val) + "for a total of " + str(final_dmg)+" damage")
 
                             #if(self.name == "Áine"):
                                 #self.wavetokens +=mpneeded
 
-                            Enemycharacter.hp -= final_dmg
-                            if(Enemycharacter.hp <= 0):
+                            enemy.hp -= final_dmg
+                            if(enemy.hp <= 0):
                                 return
                         else:
                           narrator("You miss!")
