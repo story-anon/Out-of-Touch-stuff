@@ -1629,9 +1629,7 @@ screen battle(pc,ally1,ec,hostage):
                 text pc.name+"         HP: [pc.hp]        MP: [pc.mp]" size 22 xalign 10
                 if ally1.name != "":
                     text ally1.name+"  HP: [ally1.hp]   MP: [ally1.mp] Wave Tokens: [ally1.wavetokens] Tide Tokens:[ally1.tidetokens]" size 22 xalign 10
-
-                else:
-                    text "Hostage HP: [hostage.hp]" size 22 xalign 10
+                text "Hostage HP: [hostage.hp]" size 22 xalign 10
                 text ec.name+" HP: [ec.hp]      MP: [ec.mp]" size 22 xalign 10
 
 

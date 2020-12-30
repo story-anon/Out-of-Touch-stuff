@@ -191,7 +191,7 @@ init python:
                     narrator("CJs fists went right through them!")
                     narrator("0 Damage done")
 
-        def magicchoice(self,action,enemy,pc,ally): #monolith, utter monolith, please fix.
+        def magicchoice(self,action,enemy,pc,ally, hostage): #monolith, utter monolith, please fix.
                def SUBFUNCTION_DICEBUFF(stat): #this feels so wrong but looks so good and python apparently specifically supports it. Essentially this is like eating junk food for programming. Or modern art. This is ethically wrong.
                    narrator("Choose who you want to give an extra "+stat+" dice to for 1mp")
                    actrtobuff = renpy.display_menu([  (ally.name, ally)])
@@ -224,11 +224,23 @@ init python:
 
                     if("HEAL" in type):
                         narrator("Choose who you want to heal")
-                        actrtobuff = renpy.display_menu([ (pc.name, pc),  (ally.name, ally)])
+                        
+                        items = []
+                        if(pc!=None):
+                            batteryItem = (pc.name, pc)
+                            items.append(batteryItem)
+                        if(ally!=None):
+                            allyItem =  (ally.name, ally)
+                            items.append(allyItem)
+                        if(hostage!=None):
+                            hostageItem =  (hostage.name, hostage)
+                            items.append(hostageItem)
+                        actrtobuff = renpy.display_menu(items)
                         if(self.name == "Áine"):  #increment wave tokens if it is Aine that is healing
                             self.wavetokens+=mpneeded
                         self.mp -= mpneeded
                         heal_roll = actrtobuff.heal(diceamnt)
+                        
                         heal_roll_sum = sum(heal_roll)
                         if(action == "Riptide(3MP)"):
                             heal_roll_sum += 4

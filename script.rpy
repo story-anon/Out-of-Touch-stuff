@@ -126,9 +126,9 @@ init python:
             if(choice =="Attack"): #if choice was attack
                 Actr.attackchoice(action,enemy) #parse which attack was chosen
             if(choice =="Magic"): #if choice was magic
-                Actr.magicchoice(action,enemy,battery,ally) #parse which magic was chosen
+                Actr.magicchoice(action,enemy,battery,ally,hostage) #parse which magic was chosen
             if((choice == "Magic" or action =="Talk" or Actr.nompflag == True)):#if we used a spell, a talk action, or didn't have enough mana for a spell
-                playerturn(battery,ally,enemy,Actr,True) #then we restart all our previous actions, running playerturn() again, but with the param True as to NOT select whose turn it is
+                playerturn(battery,ally,enemy,Actr,True,hostage) #then we restart all our previous actions, running playerturn() again, but with the param True as to NOT select whose turn it is
             if(skipSelect == True): #if skipselect is true, then we are recursed; main() - > playerturn() - > playerturn() -> playerturn(), 'return' will return us to the first playerturn()  in all cases.
                return #We are recursed, exit to main function
             Actr.turnover = True #turn is over for this Actor
@@ -199,7 +199,7 @@ label start: #game starts here
         Enemycharacter =Actr("Cro'Dhearg",9,15,60,60,0,14,5,5,18,["Attack"],3)
         #Alliedcharacter1 =Actr("Áine",8,16,40,40,0,11,5,4,18,["Attack"],{"Gentle Current(1MP)":"BUFF","Underswell(2MP)":"BUFF","Riptide(3MP)":"BUFF","Wave Crash(3MP)":"DMG"})
         Alliedcharacter1 =  Actr("",0,0,0,0,0,0,0,0,0,["Attack"],{"Gentle Current(1MP)":"BUFF","Underswell(2MP)":"BUFF","Riptide(3MP)":"BUFF","Wave Crash(3MP)":"DMG"})
-        Hostage = Actr("Hostage",0,0,20,0,0,0,0,0,0,["Whine"])
+        Hostage = Actr("Hostage",0,0,20,80,0,0,0,0,0,["Whine"])
     jump phase1
 
 
@@ -215,11 +215,13 @@ label phase1:
 
 label phase2:
     python:
+        Hostage.hp=50   
         Alliedcharacter1 =Actr("Áine",8,16,40,40,0,11,5,4,18,["Attack"],{"Gentle Current(1MP)":"BUFF","Underswell(2MP)":"BUFF","Riptide(3MP)":"BUFF","Wave Crash(3MP)":"DMG"})
         while(Enemycharacter.hp > 0 and Playercharacter.hp > 0):
             roundstart(Playercharacter,Alliedcharacter1)
             if(Playercharacter.hp> 0):
-                playerturn(Playercharacter,Alliedcharacter1,Enemycharacter,None,False)
+                playerturn(Playercharacter,Alliedcharacter1,Enemycharacter,None,False,Hostage)
             if(Enemycharacter.hp > 0):
                 enemyturn(Enemycharacter,Playercharacter,Alliedcharacter1)
+                Hostage.hp -=5
 
