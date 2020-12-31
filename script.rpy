@@ -217,11 +217,19 @@ label phase2:
     python:
         Hostage.hp=50   
         Alliedcharacter1 =Actr("Áine",8,16,40,40,0,11,5,4,18,["Attack"],{"Gentle Current(1MP)":"BUFF","Underswell(2MP)":"BUFF","Riptide(3MP)":"BUFF","Wave Crash(3MP)":"DMG"})
+        turn =0
+        croHurt =0
         while(Enemycharacter.hp > 0 and Playercharacter.hp > 0):
             roundstart(Playercharacter,Alliedcharacter1)
             if(Playercharacter.hp> 0):
                 playerturn(Playercharacter,Alliedcharacter1,Enemycharacter,None,False,Hostage)
+                if(Enemycharacter.croHurtLastTurn == True):
+                    croHurt = 0
+                if(croHurt > 0):
+                    Enemycharacter.croHurtLastTurn = False
             if(Enemycharacter.hp > 0):
                 enemyturn(Enemycharacter,Playercharacter,Alliedcharacter1)
                 Hostage.hp -=5
+            if(Enemycharacter.croHurtLastTurn == True):
+                croHurt+=1
 

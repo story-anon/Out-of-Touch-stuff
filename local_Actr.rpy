@@ -3,7 +3,7 @@ init python:
     class Actr:
         #Initial Implementation goals.
             #'''
-            #1) Webms need to play on every screen that shows in combat. There needs to be a way to randomly select which webm plays for certain screens (so it cycles through different angles for idle/cast animations)
+
 
             #2) Enemy NPC needs better behavior. She should do her normal attack 3-4 times before doing one of her special attacks (either a single target 2x hit attack or an AOE attack that hits both CJ and Aine).
 
@@ -21,6 +21,7 @@ init python:
             #6) Add little screen where abilities are shown that describes what each ability/spell does.
             #'''
         name = "you forgot to add a name retard"
+        hostageHasBeenHealed = False
         atk = 0
         defense = 0
         hp = 0
@@ -43,6 +44,7 @@ init python:
         wavetokens = 0
         tidetokens = 0
         nompflag = False
+        croHurtLastTurn = False
         def __init__(self, name, atk, defense, hp, mhp, mp, str, mmp, agi, armor, attacks=[], magic={}, abilities={}, items=[], dice=2):
             self.name = name
             self.atk = atk
@@ -180,6 +182,8 @@ init python:
                         else:
                             narrator("Your dice rolls were [" + ''.join(str(x) + "," for x in dmg_roll) + "]" + "plus your POW of " + "[" + str(self.str) + "]" + " minus the enemy's armor of " + str(target.armor) + "for a total of " + str(displayable) + " multiplied by your tide token bonus of " + str(mult_val) + "for a total of " + str(final_dmg) + " damage")
                         target.hp -= final_dmg
+
+                        target.croHurtLastTurn = True
                         if (target.hp <= 0):
                             return
 
@@ -213,6 +217,8 @@ init python:
                 #Because type[0] is name, we can simply access it by the 'in' operator
                 mpneeded = type[1]
                 diceamnt = type[2] if len(type) == 3 else 0
+                
+                
                 if(self.mp - mpneeded >= 0):
                     if("ATKDICEBUFF" in type):
                         SUBFUNCTION_DICEBUFF("ATK")
@@ -223,8 +229,8 @@ init python:
 
 
                     if("HEAL" in type):
-                        narrator("Choose who you want to heal")
                         
+                        narrator("Choose who you want to heal")
                         items = []
                         if(pc!=None):
                             batteryItem = (pc.name, pc)
@@ -236,22 +242,28 @@ init python:
                             hostageItem =  (hostage.name, hostage)
                             items.append(hostageItem)
                         actrtobuff = renpy.display_menu(items)
-                        if(self.name == "Áine"):  #increment wave tokens if it is Aine that is healing
-                            self.wavetokens+=mpneeded
-                        self.mp -= mpneeded
-                        heal_roll = actrtobuff.heal(diceamnt)
                         
-                        heal_roll_sum = sum(heal_roll)
-                        if(action == "Riptide(3MP)"):
-                            heal_roll_sum += 4
-                        actrtobuff.hp += heal_roll_sum
-                        if(actrtobuff.hp > actrtobuff.mhp):
-                            actrtobuff.hp = actrtobuff.mhp
+                        if(enemy.croHurtLastTurn == True or (actrtobuff.hostageHasBeenHealed == False and actrtobuff.name == "Hostage")):
+                            if(self.name == "Áine"):  #increment wave tokens if it is Aine that is healing
+                                self.wavetokens+=mpneeded
+                            self.mp -= mpneeded
+                            heal_roll = actrtobuff.heal(diceamnt)
+                            heal_roll_sum = sum(heal_roll)
+                            if(action == "Riptide(3MP)"):
+                                heal_roll_sum += 4
+                            actrtobuff.hp += heal_roll_sum
+                            if(actrtobuff.hp > actrtobuff.mhp):
+                                actrtobuff.hp = actrtobuff.mhp
 
-                        renpy.show_screen("anim",random.randrange(0,5),"heal",self)
-                        renpy.pause(delay=5)
-                        renpy.show_screen("anim",random.randrange(0,5),"idle",self)
-                        narrator("Your dice rolls were ["+''.join(str(x)+"," for x in heal_roll)+ "]+4" + ", healing " +actrtobuff.name+" for "+str(heal_roll_sum) + " HP")
+                            renpy.show_screen("anim",random.randrange(0,5),"heal",self)
+                            renpy.pause(delay=5)
+                            renpy.show_screen("anim",random.randrange(0,5),"idle",self)
+                            narrator("Your dice rolls were ["+''.join(str(x)+"," for x in heal_roll)+ "]+4" + ", healing " +actrtobuff.name+" for "+str(heal_roll_sum) + " HP")
+                        else:
+                            self.mp -= mpneeded
+                            narrator("Undamaged Cro blocks the healing spell!")
+                        if(actrtobuff.name == "Hostage" and actrtobuff.hostageHasBeenHealed == False):
+                            actrtobuff.hostageHasBeenHealed = True
 
 
                 else: #Not enough mana
@@ -291,6 +303,7 @@ init python:
                                 #self.wavetokens +=mpneeded
 
                             enemy.hp -= final_dmg
+                            enemy.croHurtLastTurn = True
                             if(enemy.hp <= 0):
                                 return
                         else:
