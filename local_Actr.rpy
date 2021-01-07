@@ -21,6 +21,7 @@ init python:
             #6) Add little screen where abilities are shown that describes what each ability/spell does.
             #'''
         name = "you forgot to add a name retard"
+        show_magic = False
         hostageHasBeenHealed = False
         atk = 0
         defense = 0
@@ -45,6 +46,7 @@ init python:
         tidetokens = 0
         nompflag = False
         croHurtLastTurn = False
+        azhp_flag = False
         def __init__(self, name, atk, defense, hp, mhp, mp, str, mmp, agi, armor, attacks=[], magic={}, abilities={}, items=[], dice=2):
             self.name = name
             self.atk = atk
@@ -121,6 +123,8 @@ init python:
                 return "HEAL", 3, 3
             if(magicstring.lower() == "Gentle Current(1MP)".lower()):
                 return "HEAL", 1, 1
+            if(magicstring.lower() == "Out of Touch(3MP)".lower()):
+                return "RES",3
 
         def magicattacktype(self, magicstring):
 
@@ -196,7 +200,7 @@ init python:
                     narrator("0 Damage done")
 
         def magicchoice(self,action,enemy,pc,ally, hostage): #monolith, utter monolith, please fix.
-               def SUBFUNCTION_DICEBUFF(stat): #this feels so wrong but looks so good and python apparently specifically supports it. Essentially this is like eating junk food for programming. Or modern art. This is ethically wrong.
+               def SUBFUNCTION_DICEBUFF(stat): #update: found out why subfunctions exist: functional programming is a thing in python apparently. Might be good for this project? 
                    narrator("Choose who you want to give an extra "+stat+" dice to for 1mp")
                    actrtobuff = renpy.display_menu([  (ally.name, ally)])
                    renpy.show_screen("anim",random.randrange(0,5),"cast",self)
@@ -227,7 +231,11 @@ init python:
                     if("DMGDICEBUFF" in type):
                         SUBFUNCTION_DICEBUFF("STR")
 
-
+                    if("RES" in type):
+                        ally.hp = ally.mhp
+                        narrator("Aine was resurrected at full HP!")
+                        self.mp -= mpneeded
+                        
                     if("HEAL" in type):
                         
                         narrator("Choose who you want to heal")

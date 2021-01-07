@@ -1523,7 +1523,7 @@ style slider_pref_slider:
 
 screen anim(randnum, anim_type,Actr,ally = None, azhp_flag = False):
     if ally!= None:
-        $azhp_flag =  (ally.hp <= 0)
+        $ally.azhp_flag =  (ally.hp <= 0)
     if(anim_type == "idle"): #There may be a way to simplify this function.
         if (Actr.name == "CJ"):
             if(azhp_flag == False):
@@ -1605,7 +1605,8 @@ screen battle(pc,ally1,ec,hostage):
                 xpos 20
                 ypos 5
                 textbutton _("Attack") action Return("Attack")
-                textbutton _("Magic") action Return("Magic")
+                if(pc.show_magic == True):
+                    textbutton _("Magic") action Return("Magic")
                 textbutton _("Abilities") action Return("Abilities")
                 textbutton _("Items") action Return("Items")
                 textbutton _("Guard") action Return("Guard")
@@ -1633,7 +1634,7 @@ screen battle(pc,ally1,ec,hostage):
                 text ec.name+" HP: [ec.hp]      MP: [ec.mp]" size 22 xalign 10
 
 
-screen battlechoice(Actr, choice,randnum,anim_type,azhp_flag=False):
+screen battlechoice(Actr, choice,azhp_flag=False):
 
 
         modal True
@@ -1656,7 +1657,10 @@ screen battlechoice(Actr, choice,randnum,anim_type,azhp_flag=False):
                     textbutton "Go back" action Return("b")
                 if choice == "Magic":
                     for item in Actr.magic:
-                        textbutton item action Return(item)
+                        if(item != "Out of Touch(3MP)"):
+                            textbutton item action Return(item)
+                        if(item == "Out of Touch(3MP)" and azhp_flag==True):
+                            textbutton item action Return(item)
                     textbutton "Go back" action Return("b")
                 if choice == "Abilities":
                     for item in Actr.abilities:

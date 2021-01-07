@@ -67,6 +67,7 @@ init python:
                     #The display_menu function takes sets of 2-item tuples. 
                     #essentially this sets display menu items to be tuples of characters if that character's name is not ""
                     #quick hack, I know, but this is a setup for better code much later.
+                    #todo: rename 'items' because that's a dumb name
                     items = []
                     if(battery!=None):
                         batteryItem = (battery.name, battery)
@@ -75,28 +76,29 @@ init python:
                         allyItem =  (ally.name, ally)
                         items.append(allyItem)
                     Actr = renpy.display_menu(items) #Get which char will move
-                    while(Actr.turnover == True): #While selected char's turn is over, get which char will move
-                        narrator(Actr.name + "Has already gone this turn!")
-                        narrator("Which character will move?", interact=False)
-                        Actr = renpy.display_menu(items)
                     while(Actr.hp <= 0): #While selected char's turn is fucking DEAD, get which char will move
                         narrator(Actr.name + "is dead!")
                         narrator("Which character will move?", interact=False)
                         Actr = renpy.display_menu(items)
+                    while(Actr.turnover == True): #While selected char's turn is over, get which char will move
+                        narrator(Actr.name + "Has already gone this turn!")
+                        narrator("Which character will move?", interact=False)
+                        Actr = renpy.display_menu(items)
+                    
                     
                 else:
                     Actr = battery
                     
                 return Actr
 
-    def get_characters_action(Actr, choice):
+    def get_characters_action(Actr, choice,azhp_flag):
             action = " "
             if(choice=="Guard"):
                 Actr.isguarding = True
                 Actr.turnover = True
                 narrator("You ready yourself for the enemy's next attack.")
             if(choice!="Guard"):
-                action = renpy.call_screen("battlechoice",Actr,choice,random.randrange(0,5),"idle")
+                action = renpy.call_screen("battlechoice",Actr,choice,azhp_flag)
 
 
             return action
@@ -119,10 +121,10 @@ init python:
             renpy.show_screen("anim",random.randrange(0,5),"idle",Actr,ally)
 
             choice = renpy.call_screen("battle",battery,ally,enemy,hostage) #we get the choice from the battle screen
-            action = get_characters_action(Actr,choice) #we get the action from the action screen
+            action = get_characters_action(Actr,choice,ally.azhp_flag) #we get the action from the action screen
             while(action=="b"): #if the player chose "BACK" , do the above again
                 choice = renpy.call_screen("battle",battery,ally,enemy,hostage)
-                action = get_characters_action(Actr,choice)
+                action = get_characters_action(Actr,choice,ally.azhp_flag)
             if(choice =="Attack"): #if choice was attack
                 Actr.attackchoice(action,enemy) #parse which attack was chosen
             if(choice =="Magic"): #if choice was magic
@@ -195,7 +197,7 @@ label start: #game starts here
         
         #Actr Declaration
         #Actr(name, atk, defense, hp, mhp, mp, str, mmp, agi, armor, attacks=[], magic={"SPELLNAME":"BUFF OR DMG"}, abilities={"SPELLNAME":"BUFF OR DMG"}, items=[], dice=2) ###dice = 2 means default is 2, that's why enemy has a 3 there.
-        Playercharacter = Actr("CJ",0,14,20,20,5,0,5,5,15,["Attack", "Talk"],{"One On One(1MP)":"BUFF","Man Eater(1MP)":"BUFF"})
+        Playercharacter = Actr("CJ",0,14,20,20,5,0,5,5,15,["Attack", "Talk"],{"One On One(1MP)":"BUFF","Man Eater(1MP)":"BUFF","Out of Touch(3MP)":"BUFF"})
         Enemycharacter =Actr("Cro'Dhearg",9,15,60,60,0,14,5,5,18,["Attack"],3)
         #Alliedcharacter1 =Actr("Áine",8,16,40,40,0,11,5,4,18,["Attack"],{"Gentle Current(1MP)":"BUFF","Underswell(2MP)":"BUFF","Riptide(3MP)":"BUFF","Wave Crash(3MP)":"DMG"})
         Alliedcharacter1 =  Actr("",0,0,0,0,0,0,0,0,0,["Attack"],{"Gentle Current(1MP)":"BUFF","Underswell(2MP)":"BUFF","Riptide(3MP)":"BUFF","Wave Crash(3MP)":"DMG"})
@@ -206,7 +208,6 @@ label start: #game starts here
 label phase1:
     python:
         while(Hostage.hp>5):
-            
             renpy.show_screen("anim",random.randrange(0,5),"idle",Playercharacter,Alliedcharacter1)
             renpy.pause(delay=0.01)
             playerturn(Playercharacter,Alliedcharacter1,Enemycharacter,None,False,Hostage)
@@ -215,21 +216,25 @@ label phase1:
 
 label phase2:
     python:
+        Playercharacter.show_magic = True
         Hostage.hp=50   
-        Alliedcharacter1 =Actr("Áine",8,16,40,40,0,11,5,4,18,["Attack"],{"Gentle Current(1MP)":"BUFF","Underswell(2MP)":"BUFF","Riptide(3MP)":"BUFF","Wave Crash(3MP)":"DMG"})
+        Alliedcharacter1 =Actr("Áine",8,16,1,40,0,11,5,4,18,["Attack"],{"Gentle Current(1MP)":"BUFF","Underswell(2MP)":"BUFF","Riptide(3MP)":"BUFF","Wave Crash(3MP)":"DMG"})
+        Alliedcharacter1.show_magic = True
         turn =0
         croHurt =0
-        while(Enemycharacter.hp > 0 and Playercharacter.hp > 0):
+        while(Hostage.hp < 80 and Hostage.hp > 0): 
             roundstart(Playercharacter,Alliedcharacter1)
-            if(Playercharacter.hp> 0):
-                playerturn(Playercharacter,Alliedcharacter1,Enemycharacter,None,False,Hostage)
-                if(Enemycharacter.croHurtLastTurn == True):
-                    croHurt = 0
-                if(croHurt > 0):
-                    Enemycharacter.croHurtLastTurn = False
-            if(Enemycharacter.hp > 0):
-                enemyturn(Enemycharacter,Playercharacter,Alliedcharacter1)
-                Hostage.hp -=5
+            playerturn(Playercharacter,Alliedcharacter1,Enemycharacter,None,False,Hostage)
+            if(Enemycharacter.croHurtLastTurn == True):
+                croHurt = 0
+            if(croHurt > 0):
+                Enemycharacter.croHurtLastTurn = False
+            enemyturn(Enemycharacter,Playercharacter,Alliedcharacter1)
+            Hostage.hp -=5
             if(Enemycharacter.croHurtLastTurn == True):
                 croHurt+=1
+        if(Hostage.hp <=0):
+            narrator("Hostage is dead, do a label jump here")
+        if(Hostage.hp>=80):
+            narrator("Hostage is healed fully, do a label jump here")
 
