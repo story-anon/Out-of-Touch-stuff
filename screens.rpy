@@ -1581,8 +1581,12 @@ screen mpallocation(pc,ally1,end): #SCALABILITY ISSUES
                 ypos 5
                 text pc.name+"'s mp: [pc.mp]."
                 text ally1.name+"'s mp: [ally1.mp]."
-                imagebutton idle "chadup.png" action Function(ally1.mpallocationincrement, pc)
-                imagebutton idle "chaddown.png" action Function(ally1.mpallocationdecrement, pc)
+                if(ally1.azhp_flag == False):
+                    imagebutton idle "chadup.png" action Function(ally1.mpallocationincrement, pc)
+                if(ally1.azhp_flag == False):
+                    imagebutton idle "chaddown.png" action Function(ally1.mpallocationdecrement, pc)
+                if(ally1.azhp_flag == True):
+                    text "Aine is FUCKING DEAD"
 
 
 
