@@ -138,56 +138,95 @@ init python:
         ally.turnover = False
 
     def enemyturn(enemy,battery,ally):
+        def SUBFUNCTION_CROATTACK(Actr,targetList,type="normal",bonusatk =0, bonusdmg =0):
+                wavebonus = 0
+                for target in targetList:
+                    narrator("Enemy is attacking "+target.name+"!")
+                    renpy.show_screen("anim",random.randrange(0,5),"attack",Actr)
+                    renpy.pause(delay=5)
+                    choice = "Attack"
+                    if(choice =="Attack"):
+                        action = "Attack"
+                        attack_roll = Actr.attack(action)
+                        attack_sum = sum(attack_roll) + Actr.atk +bonusatk
+                        if(target.name == "Áine"):
+                            wavebonus = target.wavetokens * 2
+                            target.tidetokens = target.wavetokens
+                            target.wavetokens = 0
+                            narrator("Enemy's dice rolls were ["+''.join(str(x)+"," for x in attack_roll)+ "] Plus their ATK of ["+str(Actr.atk) + "] for a total of [" + str(attack_sum ) +"] against "+target.name+"'s '["+str(target.defense+wavebonus)+"] defense.")#Don't worry about it.
 
+                        if(attack_sum == target.defense+wavebonus or attack_sum > target.defense+wavebonus): #You hit!
+                            narrator("Enemy hits!")
+                            dmg_roll = Actr.damage(target)
+                            dmg_roll_sum =  (sum(dmg_roll)+Actr.str) + bonusdmg
+                            final_dmg = dmg_roll_sum - target.armor
+                            if(final_dmg < 0):
+                                final_dmg = 0
+                            
+                            renpy.show_screen("anim",random.randrange(0,5),"attacked",target)
+                            renpy.pause(delay=5)
+                            if(target.name == "CJ" and target.mp >0):
+                                target.mp-=1
+                                Actr.heatToken +=1
+                                renpy.show_screen("anim",random.randrange(0,5),"attacked",target)
+                                renpy.pause(delay=5)
+                                narrator("CJ lost 1 mp!")
+                            else:
+                                renpy.show_screen("anim",random.randrange(0,5),"attacked",target)
+                                renpy.pause(delay=5)
+                                Actr.heatToken +=1
+                                narrator("Enemy's dice rolls were ["+''.join(str(x)+"," for x in dmg_roll)+ "] Plus their DMG of ["+str(Actr.str) + "] for a total of [" + str(dmg_roll_sum ) +"] against "+target.name+"'s '["+str(target.armor)+"] armor. Hitting for [" +str(final_dmg)+"]")#Don't worry about it.
+                                target.hp -= final_dmg
+
+                            #if(battery.hp <=0):
+                                #return
+                            if(target.isguarding==True):
+                                target.isguarding =False
+                        else: #You miss!
+                                narrator("Enemy misses!")
+                return             
+                            
+                            
         Actr = enemy
-        wavebonus = 0
+        
         target = None
-        rand_target = random.randrange(0,2)
-        if((rand_target == 0) and (battery.mp == 0 )):
-            target = ally
-        elif(rand_target == 0):
-            target = battery
-        if(rand_target ==1):
-            target = ally
+        #Perform 1d3 normal attacks (roll 6 sided die, divide the result in half, round up)
+        normalAttacks = int(math.ceil(random.randrange(1,7)/2))
+        if(normalAttacks==0):
+            normalAttacks=1
+        narrator("Enemy will attack "+str(normalAttacks)+" times!")
+        for numAttack in range(int(normalAttacks)): #do an attack normalrange times
+            narrator("Attack # "+str(numAttack))
+            rand_target = random.randrange(0,2)
+            if((rand_target == 0) and (battery.mp == 0 )):
+                target = ally
+            elif(rand_target == 0):
+                target = battery
+            if(rand_target ==1 and ally.hp >0):
+                target = ally
+            else:
+                target = battery
+            
+            #if we are on the first attack(0) and enemy has 5 heattokens, do a special attack
+            if(numAttack == 0 and enemy.heatToken >=5):
+                choice = "Special"
+                if(choice == "Special"):
+                    specialChoice = random.randrange(0,2) #0 or 1
+                    if(ally.hp <=0 and battery.mp <=0 ):
+                        narrator("Cro taunts CJ")
+                    elif(specialChoice == 0 or battery.mp ==0): #single target 
+                        narrator("Cro is doing a single target special!")
+                        SUBFUNCTION_CROATTACK(Actr,[target],"single",8,18)
+                        Actr.heatToken =0
+                    elif(specialChoice == 1): #AOE
+                        narrator("Cro is doing an AOE attack!")
+                        SUBFUNCTION_CROATTACK(Actr,[battery,ally],"AOE",7,15)
+                        Actr.heatToken =0
+                        
+            else:
+                narrator("Cro readies for a normal attack!")
+                SUBFUNCTION_CROATTACK(Actr,[target])
 
-        narrator("Enemy is attacking "+target.name+"!")
-        renpy.show_screen("anim",random.randrange(0,5),"attack",Actr)
-        renpy.pause(delay=5)
-        choice = "Attack"
-        if(choice =="Attack"):
-              action = "Attack"
-              attack_roll = Actr.attack(action)
-              attack_sum = sum(attack_roll) + Actr.atk
-              if(target.name == "Áine"):
-                wavebonus = target.wavetokens * 2
-                target.tidetokens = target.wavetokens
-                target.wavetokens = 0
-              narrator("Enemy's dice rolls were ["+''.join(str(x)+"," for x in attack_roll)+ "] Plus their ATK of ["+str(Actr.atk) + "] for a total of [" + str(attack_sum ) +"] against "+target.name+"'s '["+str(target.defense+wavebonus)+"] defense.")#Don't worry about it.
-
-              if(attack_sum == enemy.defense+wavebonus or attack_sum > enemy.defense+wavebonus): #You hit!
-                  narrator("Enemy hits!")
-
-                  dmg_roll = Actr.damage(target)
-                  dmg_roll_sum =  (sum(dmg_roll)+Actr.str)
-                  final_dmg = dmg_roll_sum - target.armor
-                  if(final_dmg < 0):
-                       final_dmg = 0
-
-                  renpy.show_screen("anim",random.randrange(0,5),"attacked",target)
-                  renpy.pause(delay=5)
-                  if(target.name == "CJ" and target.mp >0):
-                      target.mp-=1
-                      narrator("CJ lost 1 mp!")
-                  else:
-                      narrator("Enemy's dice rolls were ["+''.join(str(x)+"," for x in dmg_roll)+ "] Plus their DMG of ["+str(Actr.str) + "] for a total of [" + str(dmg_roll_sum ) +"] against "+target.name+"'s '["+str(target.armor)+"] armor. Hitting for [" +str(final_dmg)+"]")#Don't worry about it.
-                      target.hp -= final_dmg
-
-                  if(battery.hp <=0):
-                    return
-                  if(target.isguarding==True):
-                    target.isguarding =False
-              else: #You miss!
-                    narrator("Enemy misses!")
 
 
 
@@ -223,6 +262,7 @@ label phase2:
         turn =0
         croHurt =0
         while(Hostage.hp < 80 and Hostage.hp > 0): 
+            Alliedcharacter1.azhp_flag =  (Alliedcharacter1.hp <= 0)
             roundstart(Playercharacter,Alliedcharacter1)
             playerturn(Playercharacter,Alliedcharacter1,Enemycharacter,None,False,Hostage)
             if(Enemycharacter.croHurtLastTurn == True):

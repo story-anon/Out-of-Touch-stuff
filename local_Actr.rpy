@@ -37,6 +37,7 @@ init python:
         abilities = {}
         items = []
         dice = 2
+        heatToken = 0
         extraATKdice = 0
         extraSTRdice = 0
         extraHEALdice = 0
@@ -234,6 +235,7 @@ init python:
                     if("RES" in type):
                         ally.hp = ally.mhp
                         narrator("Aine was resurrected at full HP!")
+                        Alliedcharacter1.azhp_flag =  (ally.hp <= 0)
                         self.mp -= mpneeded
                         
                     if("HEAL" in type):

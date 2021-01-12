@@ -1632,10 +1632,10 @@ screen battle(pc,ally1,ec,hostage):
                 xpos 20
                 ypos 5 #find a way to to tabs, because this space formatting is garbage
                 text pc.name+"         HP: [pc.hp]        MP: [pc.mp]" size 22 xalign 10
-                if ally1.name != "":
+                if ally1.name != "" and ally1.hp>0:
                     text ally1.name+"  HP: [ally1.hp]   MP: [ally1.mp] Wave Tokens: [ally1.wavetokens] Tide Tokens:[ally1.tidetokens]" size 22 xalign 10
                 text "Hostage HP: [hostage.hp]" size 22 xalign 10
-                text ec.name+" HP: [ec.hp]      MP: [ec.mp]" size 22 xalign 10
+                text ec.name+" HP: [ec.hp]   Heat Tokens: [ec.heatToken]   MP: [ec.mp]" size 22 xalign 10
 
 
 screen battlechoice(Actr, choice,azhp_flag=False):
